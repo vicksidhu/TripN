@@ -54,7 +54,10 @@ export default function TripsScreen() {
   );
 
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString();
+    const dateOnly = date.slice(0, 10);
+    const [year, month, day] = dateOnly.split('-');
+
+    return `${month}/${day}/${year}`;
   };
 
   return (
