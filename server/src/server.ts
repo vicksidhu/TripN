@@ -14,9 +14,14 @@ const app = express();
 
 const PORT = Number(process.env.PORT) || 5000;
 
+const allowedOrigins = [
+  'http://localhost:8081',
+  process.env.FRONTEND_URL,
+].filter(Boolean) as string[];
+
 app.use(
   cors({
-    origin: 'http://localhost:8081',
+    origin: allowedOrigins,
   })
 );
 
