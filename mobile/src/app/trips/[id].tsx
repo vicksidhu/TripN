@@ -139,7 +139,7 @@ export default function TripDetailsScreen() {
       );
     }
   }, [id, token]);
-  
+
   // Load expenses
   const loadExpenses = useCallback(async () => {
     if (!token || !id) {
@@ -160,7 +160,7 @@ export default function TripDetailsScreen() {
       );
     }
   }, [id, token]);
-  
+
   useFocusEffect(
     useCallback(() => {
       void loadTrip();
@@ -211,7 +211,7 @@ export default function TripDetailsScreen() {
         token
       );
 
-      router.back();
+      router.navigate('/(tabs)/trips');
     } catch (error) {
       setError(
         error instanceof Error
@@ -231,7 +231,7 @@ export default function TripDetailsScreen() {
 
     try {
       await deleteTrip(id, token);
-      router.back();
+      router.navigate('/(tabs)/trips');
     } catch (error) {
       setError(
         error instanceof Error
@@ -517,9 +517,11 @@ export default function TripDetailsScreen() {
         >
           <Text
             style={styles.back}
-            onPress={() => router.back()}
+            onPress={() => {
+              router.navigate('/trips');
+            }}
           >
-            ‹ Back
+            ‹ Back to Trips
           </Text>
 
           <Text style={styles.title}>Trip Details</Text>
@@ -1108,109 +1110,109 @@ const styles = StyleSheet.create({
   },
 
   budgetSection: {
-  marginTop: Spacing.six,
-  paddingTop: Spacing.four,
-  borderTopWidth: 1,
-  borderTopColor: Colors.light.border,
-},
+    marginTop: Spacing.six,
+    paddingTop: Spacing.four,
+    borderTopWidth: 1,
+    borderTopColor: Colors.light.border,
+  },
 
-budgetSummary: {
-  backgroundColor: Colors.light.card,
-  borderWidth: 1,
-  borderColor: Colors.light.border,
-  borderRadius: 12,
-  padding: Spacing.three,
-  gap: Spacing.two,
-  marginBottom: Spacing.four,
-},
+  budgetSummary: {
+    backgroundColor: Colors.light.card,
+    borderWidth: 1,
+    borderColor: Colors.light.border,
+    borderRadius: 12,
+    padding: Spacing.three,
+    gap: Spacing.two,
+    marginBottom: Spacing.four,
+  },
 
-budgetRow: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-},
+  budgetRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 
-budgetLabel: {
-  fontFamily: Fonts.bodyMedium,
-  fontSize: 15,
-  color: Colors.light.textSecondary,
-},
+  budgetLabel: {
+    fontFamily: Fonts.bodyMedium,
+    fontSize: 15,
+    color: Colors.light.textSecondary,
+  },
 
-budgetValue: {
-  fontFamily: Fonts.bodySemiBold,
-  fontSize: 16,
-  color: Colors.light.text,
-},
+  budgetValue: {
+    fontFamily: Fonts.bodySemiBold,
+    fontSize: 16,
+    color: Colors.light.text,
+  },
 
-overBudget: {
-  color: Colors.light.primary,
-},
+  overBudget: {
+    color: Colors.light.primary,
+  },
 
-expensesTitle: {
-  fontFamily: Fonts.headingSemiBold,
-  fontSize: 26,
-  color: Colors.light.text,
-  marginBottom: Spacing.three,
-},
+  expensesTitle: {
+    fontFamily: Fonts.headingSemiBold,
+    fontSize: 26,
+    color: Colors.light.text,
+    marginBottom: Spacing.three,
+  },
 
-expenseList: {
-  gap: Spacing.three,
-  marginBottom: Spacing.four,
-},
+  expenseList: {
+    gap: Spacing.three,
+    marginBottom: Spacing.four,
+  },
 
-expenseCard: {
-  backgroundColor: Colors.light.card,
-  borderWidth: 1,
-  borderColor: Colors.light.border,
-  borderRadius: 12,
-  padding: Spacing.three,
-},
+  expenseCard: {
+    backgroundColor: Colors.light.card,
+    borderWidth: 1,
+    borderColor: Colors.light.border,
+    borderRadius: 12,
+    padding: Spacing.three,
+  },
 
-expenseHeader: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  gap: Spacing.two,
-},
+  expenseHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: Spacing.two,
+  },
 
-expenseInfo: {
-  flex: 1,
-},
+  expenseInfo: {
+    flex: 1,
+  },
 
-expenseDescription: {
-  fontFamily: Fonts.headingSemiBold,
-  fontSize: 20,
-  color: Colors.light.text,
-},
+  expenseDescription: {
+    fontFamily: Fonts.headingSemiBold,
+    fontSize: 20,
+    color: Colors.light.text,
+  },
 
-expenseCategory: {
-  fontFamily: Fonts.body,
-  fontSize: 13,
-  color: Colors.light.textSecondary,
-  marginTop: Spacing.one,
-},
+  expenseCategory: {
+    fontFamily: Fonts.body,
+    fontSize: 13,
+    color: Colors.light.textSecondary,
+    marginTop: Spacing.one,
+  },
 
-expenseAmount: {
-  fontFamily: Fonts.bodySemiBold,
-  fontSize: 16,
-  color: Colors.light.primary,
-},
+  expenseAmount: {
+    fontFamily: Fonts.bodySemiBold,
+    fontSize: 16,
+    color: Colors.light.primary,
+  },
 
-removeExpense: {
-  fontFamily: Fonts.bodySemiBold,
-  fontSize: 13,
-  color: Colors.light.primary,
-  marginTop: Spacing.two,
-},
+  removeExpense: {
+    fontFamily: Fonts.bodySemiBold,
+    fontSize: 13,
+    color: Colors.light.primary,
+    marginTop: Spacing.two,
+  },
 
-addExpenseTitle: {
-  fontFamily: Fonts.headingSemiBold,
-  fontSize: 26,
-  color: Colors.light.text,
-  marginBottom: Spacing.three,
-},
+  addExpenseTitle: {
+    fontFamily: Fonts.headingSemiBold,
+    fontSize: 26,
+    color: Colors.light.text,
+    marginBottom: Spacing.three,
+  },
 
-expenseForm: {
-  gap: Spacing.three,
-},
+  expenseForm: {
+    gap: Spacing.three,
+  },
 
 });

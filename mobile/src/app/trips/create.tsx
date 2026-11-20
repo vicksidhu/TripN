@@ -66,7 +66,7 @@ export default function CreateTripScreen() {
         token
       );
 
-      router.back();
+      router.navigate('/(tabs)/trips');
     } catch (error) {
       setError(
         error instanceof Error
@@ -90,7 +90,9 @@ export default function CreateTripScreen() {
         >
           <Text
             style={styles.back}
-            onPress={() => router.back()}
+            onPress={() => {
+              router.navigate('/(tabs)/trips');
+            }}
           >
             ‹ Back
           </Text>
