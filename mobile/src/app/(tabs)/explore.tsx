@@ -16,7 +16,7 @@ import {
 
 import {
   ActivityIndicator,
-  FlatList,
+  ScrollView,
   Pressable,
   StyleSheet,
   Text,
@@ -59,13 +59,18 @@ export default function ExploreScreen() {
     try {
       setIsLoading(true);
       setError('');
+      setSaveError('');
       setSelectedPlace(null);
+      setWeather(null);
+      setWeatherError('');
+      setResults([]);
 
       const places = await searchPlaces(
         query.trim()
       );
 
       setResults(places);
+
     } catch (error) {
       setError(
         error instanceof Error
@@ -83,6 +88,10 @@ export default function ExploreScreen() {
     setSelectedPlace(place);
     setResults([]);
     setQuery(place.formatted);
+
+    setWeather(null);
+    setWeatherError('');
+    setSaveError('');
   };
 
   const { token } = useAuth();
@@ -137,6 +146,14 @@ export default function ExploreScreen() {
         saved,
         ...current,
       ]);
+      setSelectedPlace(null);
+
+      setQuery('');
+      setResults([]);
+      setWeather(null);
+      setWeatherError('');
+      setSaveError('');
+
     } catch (error) {
       setSaveError(
         error instanceof Error
@@ -202,7 +219,10 @@ export default function ExploreScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+      >
         <Text style={styles.title}>Explore</Text>
 
         <Text style={styles.subtitle}>
@@ -249,31 +269,31 @@ export default function ExploreScreen() {
           </Text>
         ) : null}
 
-        <FlatList
-          data={results}
-          keyExtractor={(item) => item.place_id}
-          contentContainerStyle={styles.results}
-          renderItem={({ item }) => (
-            <Pressable
-              style={({ pressed }) => [
-                styles.resultCard,
-                pressed && styles.pressed,
-              ]}
-              onPress={() =>
-                handleSelectPlace(item)
-              }
-            >
-              <Text style={styles.placeName}>
-                {item.formatted}
-              </Text>
+        {results.length > 0 ? (
+          <View style={styles.results}>
+            {results.map((item) => (
+              <Pressable
+                key={item.place_id}
+                style={({ pressed }) => [
+                  styles.resultCard,
+                  pressed && styles.pressed,
+                ]}
+                onPress={() =>
+                  handleSelectPlace(item)
+                }
+              >
+                <Text style={styles.placeName}>
+                  {item.formatted}
+                </Text>
 
-              <Text style={styles.coordinates}>
-                {item.lat.toFixed(4)},{' '}
-                {item.lon.toFixed(4)}
-              </Text>
-            </Pressable>
-          )}
-        />
+                <Text style={styles.coordinates}>
+                  {item.lat.toFixed(4)},{' '}
+                  {item.lon.toFixed(4)}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+        ) : null}
 
         {selectedPlace ? (
           <View style={styles.selectedCard}>
@@ -400,7 +420,7 @@ export default function ExploreScreen() {
             </View>
           )}
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -412,11 +432,11 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    flex: 1,
     width: '100%',
     maxWidth: 700,
     alignSelf: 'center',
     padding: Spacing.four,
+    paddingBottom: Spacing.six,
   },
 
   title: {
